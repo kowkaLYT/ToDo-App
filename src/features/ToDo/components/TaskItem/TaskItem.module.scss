@@ -1,0 +1,21 @@
+.taskItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 8px;
+    color: var(--white, rgba(247, 247, 247, 1));
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--purple, rgba(108, 99, 255, 1));
+    opacity: 0.5;
+
+    .actionButton {
+        width: 24px;
+        height: 24px;
+        background: transparent;
+        border: none;
+    }
+}
