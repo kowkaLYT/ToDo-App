@@ -13,7 +13,14 @@ export default function ToDo() {
     const removeTask = (index) => {
         setTasks((prev) => prev.filter((_, i) => i !== index));
     };
-
+    const editTask = (index, newTask) => {
+        
+        if (newTask.trim()) {
+            const updated = [...tasks];
+            updated[index] = newTask;
+            setTasks(updated);
+        }
+    }
     const moveTaskUp = (index) => {
         if (index > 0) {
             const updated = [...tasks];
@@ -39,6 +46,7 @@ export default function ToDo() {
                 onRemove={removeTask}
                 onMoveUp={moveTaskUp}
                 onMoveDown={moveTaskDown}
+                onEdit={editTask}
             />
         </div>
     );

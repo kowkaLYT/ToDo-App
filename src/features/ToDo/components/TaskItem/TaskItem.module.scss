@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 8px;
-    color: var(--white, rgba(247, 247, 247, 1));
+    color: var(--white, #f7f7f7);
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
@@ -17,5 +17,18 @@
         height: 24px;
         background: transparent;
         border: none;
+        cursor: pointer;
+    }
+
+    .editInput {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: #d049e2f8;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
     }
 }
