@@ -1,15 +1,42 @@
-.toDoList {
-    max-width: 750px;
-    width: 100%;
+.toDoContainer {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 20px;
-    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.toDoTitle {
-    font-size: 26px;
-    font-weight: 500;
-    line-height: 100%;
+.toDoList {
+    position: relative;
+    max-width: 1150px;
+    width: 100%;
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 12px #0000001a;
+    border-radius: 12px;
+}
+
+.buttonPlusModal {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #8d64ed;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px #00000033;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+        background: #7a4ede;
+    }
 }

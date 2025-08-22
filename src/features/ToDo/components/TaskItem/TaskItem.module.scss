@@ -32,3 +32,14 @@
         margin: 0;
     }
 }
+
+.taskLabel {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.completed .textTask {
+    text-decoration: line-through;
+    color: gray;
+}
