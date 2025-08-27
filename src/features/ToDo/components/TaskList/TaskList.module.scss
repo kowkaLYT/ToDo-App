@@ -1,3 +1,23 @@
 .taskContainer {
     width: 100%;
 }
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    color: #888;
+
+    .emptyImage {
+        width: 200px;
+        opacity: 0.7;
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}

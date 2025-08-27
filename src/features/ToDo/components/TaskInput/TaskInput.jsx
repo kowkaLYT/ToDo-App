@@ -1,4 +1,4 @@
-import { Sun, ChevronDown } from "lucide-react";
+import { Sun, ChevronDown, ListFilter } from "lucide-react";
 import styles from "./TaskInput.module.scss";
 
 export default function TaskInput({ onSearch }) {
@@ -15,7 +15,7 @@ export default function TaskInput({ onSearch }) {
                 className={styles.taskInput}
             />
             <button className={styles.tasksFilter}>
-                <span>All</span>
+                <ListFilter />
                 <ChevronDown className={styles.arrowDown} />
             </button>
             <Sun className={styles.taskInputIcon} />
