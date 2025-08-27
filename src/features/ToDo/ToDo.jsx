@@ -48,6 +48,32 @@ export default function ToDo() {
         }
     };
 
+    const handleDragStart = (e, dragIndex) => {
+        e.dataTransfer.setData('text/plain', dragIndex.toString());
+        e.dataTransfer.effectAllowed = 'move';
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+    };
+
+    const handleDrop = (e, dropIndex) => {
+        e.preventDefault();
+        const dragIndex = parseInt(e.dataTransfer.getData('text/plain'));
+
+        if (dragIndex === dropIndex) return;
+
+        const updated = [...tasks];
+        const draggedTask = updated[dragIndex];
+
+        updated.splice(dragIndex, 1);
+
+        updated.splice(dropIndex, 0, draggedTask);
+
+        setTasks(updated);
+    };
+
     const toggleComplete = (index) => {
         setTasks((prev) => {
             const updated = [...prev];
@@ -78,17 +104,21 @@ export default function ToDo() {
                 <TaskList
                     tasks={filteredTasksWithIndices}
                     onRemove={removeTask}
-                    onMoveUp={isSearchActive ? null : moveTaskUp} 
-                    onMoveDown={isSearchActive ? null : moveTaskDown} 
+                    onMoveUp={isSearchActive ? null : moveTaskUp}
+                    onMoveDown={isSearchActive ? null : moveTaskDown}
                     onEdit={editTask}
                     onToggleComplete={toggleComplete}
                     isSearchActive={isSearchActive}
+                    onDragStart={handleDragStart}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
                 />
 
                 <button className={styles.buttonPlusModal} onClick={openModal}>
                     <Plus size={28} />
                 </button>
 
+                {/* Only show counter when there are tasks */}
                 {tasks.length > 0 && (
                     <div style={{ marginTop: 12 }}>
                         <small>

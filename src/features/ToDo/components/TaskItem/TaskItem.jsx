@@ -13,11 +13,15 @@ export default function TaskItem({
     onEdit,
     onToggleComplete,
     isSearchActive,
+    onDragStart,
+    onDragOver,
+    onDrop,
 }) {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(task.text);
     const [date, setDate] = useState(task.date);
     const [time, setTime] = useState(task.time);
+    const [isDragOver, setIsDragOver] = useState(false);
 
     const handleSave = () => {
         if (text.trim()) {
@@ -26,8 +30,45 @@ export default function TaskItem({
         }
     };
 
+    const handleDragStart = (e) => {
+        onDragStart(e, index);
+        e.currentTarget.style.opacity = '0.5';
+    };
+
+    const handleDragEnd = (e) => {
+        e.currentTarget.style.opacity = '1';
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        onDragOver(e);
+        setIsDragOver(true);
+    };
+
+    const handleDragLeave = (e) => {
+        setIsDragOver(false);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setIsDragOver(false);
+        onDrop(e, index);
+    };
+
     return (
-        <li className={`${styles.taskItem} ${task.completed ? styles.completed : ""}`}>
+        <li
+            className={`${styles.taskItem} ${task.completed ? styles.completed : ""} ${isDragOver ? styles.dragOver : ""}`}
+            draggable={!isEditing && !isSearchActive}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            style={{
+                cursor: (!isEditing && !isSearchActive) ? 'grab' : 'default',
+                transition: 'all 0.2s ease'
+            }}
+        >
             {isEditing ? (
                 <>
                     <input

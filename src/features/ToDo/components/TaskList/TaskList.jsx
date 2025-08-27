@@ -8,7 +8,10 @@ export default function TaskList({
     onMoveDown,
     onEdit,
     onToggleComplete,
-    isSearchActive
+    isSearchActive,
+    onDragStart,
+    onDragOver,
+    onDrop
 }) {
     if (tasks.length === 0) {
         return (
@@ -34,6 +37,9 @@ export default function TaskList({
                     onEdit={onEdit}
                     onToggleComplete={onToggleComplete}
                     isSearchActive={isSearchActive}
+                    onDragStart={onDragStart}
+                    onDragOver={onDragOver}
+                    onDrop={onDrop}
                 />
             ))}
         </ul>

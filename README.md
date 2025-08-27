@@ -6,3 +6,4 @@
 - if there are no tasks , show image + empty... 
 - item checkbox
 - count tasks
+- drag and drop tasks
