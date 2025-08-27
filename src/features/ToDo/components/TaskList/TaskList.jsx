@@ -1,7 +1,15 @@
 import TaskItem from "../TaskItem/TaskItem.jsx";
 import styles from "./TaskList.module.scss";
 
-export default function TaskList({ tasks, onRemove, onMoveUp, onMoveDown, onEdit, onToggleComplete }) {
+export default function TaskList({
+    tasks,
+    onRemove,
+    onMoveUp,
+    onMoveDown,
+    onEdit,
+    onToggleComplete,
+    isSearchActive
+}) {
     if (tasks.length === 0) {
         return (
             <div className={styles.emptyState}>
@@ -13,16 +21,19 @@ export default function TaskList({ tasks, onRemove, onMoveUp, onMoveDown, onEdit
 
     return (
         <ul className={styles.taskList}>
-            {tasks.map((task, index) => (
+            {tasks.map(({ task, originalIndex }, displayIndex) => (
                 <TaskItem
-                    key={index}
+                    key={originalIndex}
                     task={task}
-                    index={index}
+                    index={originalIndex}
+                    displayIndex={displayIndex}
+                    totalFilteredTasks={tasks.length}
                     onRemove={onRemove}
                     onMoveUp={onMoveUp}
                     onMoveDown={onMoveDown}
                     onEdit={onEdit}
                     onToggleComplete={onToggleComplete}
+                    isSearchActive={isSearchActive}
                 />
             ))}
         </ul>

@@ -4,3 +4,5 @@
 - remove, add, up or down tasks
 - icon "+" for modal: modal window for adding new task, new note: name, date, time; buttons cancel, add
 - if there are no tasks , show image + empty... 
+- item checkbox
+- count tasks

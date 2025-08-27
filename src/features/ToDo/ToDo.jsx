@@ -27,7 +27,7 @@ export default function ToDo() {
     const editTask = (index, newText, newDate, newTime) => {
         if (newText.trim()) {
             const updated = [...tasks];
-            updated[index] = { text: newText, date: newDate, time: newTime };
+            updated[index] = { ...updated[index], text: newText, date: newDate, time: newTime };
             setTasks(updated);
         }
     };
@@ -48,11 +48,27 @@ export default function ToDo() {
         }
     };
 
+    const toggleComplete = (index) => {
+        setTasks((prev) => {
+            const updated = [...prev];
+            updated[index] = { ...updated[index], completed: !updated[index].completed };
+            return updated;
+        });
+    };
+
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
     const completedCount = tasks.filter((t) => t.completed).length;
     const uncompletedCount = tasks.length - completedCount;
+
+    const filteredTasksWithIndices = tasks
+        .map((task, originalIndex) => ({ task, originalIndex }))
+        .filter(({ task }) =>
+            task.text.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+    const isSearchActive = searchQuery.trim().length > 0;
 
     return (
         <div className={styles.toDoContainer}>
@@ -60,25 +76,34 @@ export default function ToDo() {
                 <h1 className={styles.toDoTitle}>ToDo List</h1>
                 <TaskInput onSearch={handleSearch} />
                 <TaskList
-                    tasks={tasks.filter((task) =>
-                        task.text.toLowerCase().includes(searchQuery.toLowerCase())
-                    )}
+                    tasks={filteredTasksWithIndices}
                     onRemove={removeTask}
-                    onMoveUp={moveTaskUp}
-                    onMoveDown={moveTaskDown}
+                    onMoveUp={isSearchActive ? null : moveTaskUp} 
+                    onMoveDown={isSearchActive ? null : moveTaskDown} 
                     onEdit={editTask}
-                    onToggleComplete={(index) => {
-                        setTasks((prev) => {
-                            const updated = [...prev];
-                            updated[index].completed = !updated[index].completed;
-                            return updated;
-                        });
-                    }}
+                    onToggleComplete={toggleComplete}
+                    isSearchActive={isSearchActive}
                 />
 
                 <button className={styles.buttonPlusModal} onClick={openModal}>
                     <Plus size={28} />
                 </button>
+
+                {tasks.length > 0 && (
+                    <div style={{ marginTop: 12 }}>
+                        <small>
+                            All Tasks: {tasks.length} · Completed: {completedCount} · Not Completed: {uncompletedCount}
+                        </small>
+                    </div>
+                )}
+
+                {isSearchActive && (
+                    <div style={{ marginTop: 8 }}>
+                        <small style={{ color: '#888' }}>
+                            Move buttons are disabled during search
+                        </small>
+                    </div>
+                )}
             </div>
 
             <AddTaskModal isOpen={isModalOpen} onClose={closeModal} onAdd={addTask} />

@@ -2,23 +2,32 @@ import { useState } from "react";
 import { Trash, ArrowUp, ArrowDown, PencilLine, Check } from "lucide-react";
 import styles from "./TaskItem.module.scss";
 
-export default function TaskItem({ task, index, onRemove, onMoveUp, onMoveDown, onEdit }) {
+export default function TaskItem({
+    task,
+    index,
+    displayIndex,
+    totalFilteredTasks,
+    onRemove,
+    onMoveUp,
+    onMoveDown,
+    onEdit,
+    onToggleComplete,
+    isSearchActive,
+}) {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(task.text);
     const [date, setDate] = useState(task.date);
     const [time, setTime] = useState(task.time);
-    const [completed, setCompleted] = useState(false);
 
     const handleSave = () => {
         if (text.trim()) {
             onEdit(index, text, date, time);
             setIsEditing(false);
-            setCompleted(false);
         }
     };
 
     return (
-        <li className={`${styles.taskItem} ${completed ? styles.completed : ""}`}>
+        <li className={`${styles.taskItem} ${task.completed ? styles.completed : ""}`}>
             {isEditing ? (
                 <>
                     <input
@@ -45,8 +54,8 @@ export default function TaskItem({ task, index, onRemove, onMoveUp, onMoveDown, 
                 <label className={styles.taskLabel}>
                     <input
                         type="checkbox"
-                        checked={completed}
-                        onChange={(e) => setCompleted(e.target.checked)}
+                        checked={task.completed}
+                        onChange={() => onToggleComplete(index)}
                     />
                     <span className={styles.textTask}>
                         {task.text} — {task.date} {task.time}
@@ -54,10 +63,18 @@ export default function TaskItem({ task, index, onRemove, onMoveUp, onMoveDown, 
                 </label>
             )}
             <div className={styles.buttonsContainer}>
-                <button className={styles.actionButton} onClick={() => onMoveUp(index)}>
+                <button
+                    className={styles.actionButton}
+                    onClick={() => onMoveUp && onMoveUp(index)}
+                    disabled={isSearchActive || displayIndex === 0}
+                >
                     <ArrowUp />
                 </button>
-                <button className={styles.actionButton} onClick={() => onMoveDown(index)}>
+                <button
+                    className={styles.actionButton}
+                    onClick={() => onMoveDown && onMoveDown(index)}
+                    disabled={isSearchActive || displayIndex === totalFilteredTasks - 1}
+                >
                     <ArrowDown />
                 </button>
 
