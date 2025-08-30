@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { Plus } from "lucide-react";
 import TaskInput from "./components/TaskInput/TaskInput.jsx";
 import TaskList from "./components/TaskList/TaskList.jsx";
@@ -9,6 +9,33 @@ export default function ToDo() {
     const [tasks, setTasks] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (date) => {
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+    };
+
+    const formatDay = (date) => {
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -99,7 +126,26 @@ export default function ToDo() {
     return (
         <div className={styles.toDoContainer}>
             <div className={styles.toDoList}>
-                <h1 className={styles.toDoTitle}>ToDo List</h1>
+                <div className={styles.headToDo}>
+                    <h1 className={styles.toDoTitle}>ToDo List</h1>
+                    <div style={{ textAlign: 'center', marginTop: '8px' }}>
+                        <span style={{
+                            display: 'block',
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            marginBottom: '4px'
+                        }}>
+                            {formatTime(currentTime)}
+                        </span>
+                        <span style={{
+                            display: 'block',
+                            fontSize: '0.9rem',
+                            color: '#666'
+                        }}>
+                            {formatDay(currentTime)}
+                        </span>
+                    </div>
+                </div>
                 <TaskInput onSearch={handleSearch} />
                 <TaskList
                     tasks={filteredTasksWithIndices}
@@ -118,7 +164,40 @@ export default function ToDo() {
                     <Plus size={28} />
                 </button>
 
-                {/* Only show counter when there are tasks */}
+                {tasks.length > 0 && (
+                    <div style={{ marginTop: '16px' }}>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: '8px'
+                        }}>
+                            <span style={{ fontSize: '0.85rem', color: '#666' }}>
+                                Progress: {completedCount} of {tasks.length} tasks
+                            </span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#333' }}>
+                                {tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0}%
+                            </span>
+                        </div>
+                        <div style={{
+                            width: '100%',
+                            height: '8px',
+                            backgroundColor: '#e0e0e0',
+                            borderRadius: '4px',
+                            overflow: 'hidden',
+                            boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)'
+                        }}>
+                            <div style={{
+                                width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%`,
+                                height: '100%',
+                                backgroundColor: completedCount === tasks.length && tasks.length > 0 ? '#4CAF50' : '#2196F3',
+                                borderRadius: '4px',
+                                transition: 'width 0.3s ease-in-out, background-color 0.3s ease-in-out',
+                                backgroundImage: 'linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent)'
+                            }} />
+                        </div>
+                    </div>
+                )}
                 {tasks.length > 0 && (
                     <div style={{ marginTop: 12 }}>
                         <small>
