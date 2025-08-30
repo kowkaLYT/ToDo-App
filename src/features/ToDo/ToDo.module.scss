@@ -1,26 +1,20 @@
 .toDoContainer {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
 }
 
 .toDoList {
     position: relative;
-    max-width: 1150px;
+    max-width: 1450px;
     width: 100%;
     min-height: 800px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin: 0 auto;
     padding: 20px;
     box-shadow: 0 4px 12px #0000001a;
     border-radius: 12px;
 
-    .toDoTimeBox {
-        text-align: center;
-        margin-top: 8px;
-    }
 }
 
 .buttonPlusModal {
@@ -42,5 +36,42 @@
 
     &:hover {
         background: #7a4ede;
+    }
+}
+
+.progressBar {
+    margin-top: 16px;
+
+    .progressHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        span {
+            font-size: 0.85rem;
+        }
+
+        .progressPercent {
+            font-weight: bold;
+            color: #333;
+        }
+    }
+
+    .progressTrack {
+        width: 100%;
+        height: 8px;
+        background-color: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+
+        .progressFill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            background-color: #8d64ed; // фиолетовая
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+        }
     }
 }

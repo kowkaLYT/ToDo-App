@@ -9,3 +9,5 @@
 - drag and drop tasks
 - current date and time
 - progress bar for all tasks: both completed and not completed
+- calendar (dates, month, week view and month view)
+- sidebar
