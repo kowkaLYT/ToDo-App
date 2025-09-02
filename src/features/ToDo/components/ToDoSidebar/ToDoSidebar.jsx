@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { Plus } from "lucide-react";
 import styles from './ToDoSidebar.module.scss';
-export default function TaskCalendar() {
+import { useState, useEffect } from 'react';
+
+export default function Sidebar({ onOpenModal }) {
     const [currentTime, setCurrentTime] = useState(new Date());
+
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentTime(new Date());
@@ -27,6 +30,7 @@ export default function TaskCalendar() {
             day: 'numeric'
         });
     };
+
     return (
         <div className={styles.sidebarContainer}>
             <div className={styles.headToDo}>
@@ -36,6 +40,10 @@ export default function TaskCalendar() {
                 <span className={styles.time}>{formatTime(currentTime)}</span>
                 <span className={styles.day}>{formatDay(currentTime)}</span>
             </div>
+
+            <button className={styles.buttonPlusModal} onClick={onOpenModal}>
+                <Plus size={28} />
+            </button>
         </div>
-    )
+    );
 }

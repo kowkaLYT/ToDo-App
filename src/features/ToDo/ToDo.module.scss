@@ -15,27 +15,81 @@
     box-shadow: 0 4px 12px #0000001a;
     border-radius: 12px;
 
-}
+    .taskStats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
 
-.buttonPlusModal {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background: #8d64ed;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px #00000033;
-    cursor: pointer;
-    transition: 0.3s;
+    .priorityStats {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 500;
 
-    &:hover {
-        background: #7a4ede;
+        .priorityHigh {
+            background-color: #ff149326;
+            border: 1px solid #ff1493;
+            color: #e91e63;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #ff149340;
+                transform: scale(1.05);
+                box-shadow: 0 2px 8px #ff14934d;
+            }
+        }
+
+        .priorityMedium {
+            background-color: #ffa5002e;
+            border: 1px solid #ffa500;
+            color: #ff8c00;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #ffa50047;
+                transform: scale(1.05);
+                box-shadow: 0 2px 8px #ffa5004d;
+            }
+        }
+
+        .priorityLow {
+            background-color: #00bfff1f;
+            border: 1px solid #00bfff;
+            color: #1e90ff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #00bfff38;
+                transform: scale(1.05);
+                box-shadow: 0 2px 8px #00bfff4d;
+            }
+        }
+    }
+
+    .priorityBadge {
+        display: inline-block;
+        padding: 0 8px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 8px;
+        color: #ffffff;
+        min-width: 50px;
+        text-align: center;
     }
 }
 
@@ -70,8 +124,30 @@
             height: 100%;
             border-radius: 4px;
             transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
-            background-color: #8d64ed; // фиолетовая
+            background-color: #8d64ed;
             background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
         }
+    }
+}
+
+.sortControls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    justify-content: flex-end;
+}
+
+.sortButton {
+    padding: 6px 12px;
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #0056b3;
     }
 }

@@ -79,3 +79,51 @@
     }
 
 }
+
+.priorityContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.priorityLabel {
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.prioritySelect {
+    padding: 12px 16px;
+    border: 1px solid var(--purple, #6c63ff);
+    border-radius: 8px;
+    color: var(--white, #f7f7f7);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236c63ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+
+    option {
+        background: #2a2a2a;
+        color: var(--white, #f7f7f7);
+        padding: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &:hover,
+        &:checked {
+            background: var(--purple, #6c63ff);
+            color: #ffffff;
+        }
+    }
+}

@@ -21,11 +21,12 @@ export default function TaskItem({
     const [text, setText] = useState(task.text);
     const [date, setDate] = useState(task.date);
     const [time, setTime] = useState(task.time);
+    const [priority, setPriority] = useState(task.priority || "medium");
     const [isDragOver, setIsDragOver] = useState(false);
 
     const handleSave = () => {
         if (text.trim()) {
-            onEdit(index, text, date, time);
+            onEdit(index, text, date, time, priority); 
             setIsEditing(false);
         }
     };
@@ -53,6 +54,16 @@ export default function TaskItem({
         e.preventDefault();
         setIsDragOver(false);
         onDrop(e, index);
+    };
+
+
+    const getPriorityClass = (priority) => {
+        switch (priority) {
+            case "high": return styles.priorityHigh;
+            case "medium": return styles.priorityMedium;
+            case "low": return styles.priorityLow;
+            default: return styles.priorityMedium;
+        }
     };
 
     return (
@@ -90,6 +101,15 @@ export default function TaskItem({
                         onChange={(e) => setTime(e.target.value)}
                         className={styles.editInput}
                     />
+                    <select
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                        className={styles.editSelect}
+                    >
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
                 </>
             ) : (
                 <label className={styles.taskLabel}>
@@ -98,9 +118,14 @@ export default function TaskItem({
                         checked={task.completed}
                         onChange={() => onToggleComplete(index)}
                     />
-                    <span className={styles.textTask}>
-                        {task.text} — {task.date} {task.time}
-                    </span>
+                    <div className={styles.taskContent}>
+                        <span className={`${styles.priorityBadge} ${getPriorityClass(task.priority || "medium")}`}>
+                            {task.priority || "medium"}
+                        </span>
+                        <span className={styles.textTask}>
+                            {task.text} — {task.date} {task.time}
+                        </span>
+                    </div>
                 </label>
             )}
             <div className={styles.buttonsContainer}>

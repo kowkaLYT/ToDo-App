@@ -10,7 +10,6 @@
     line-height: 30px;
     text-transform: uppercase;
     border-bottom: 1px solid var(--purple, #6c63ff);
-    opacity: 0.5;
     transition: all 0.2s ease, transform 0.1s ease;
 
     &.dragOver {
@@ -87,5 +86,89 @@
         text-decoration-color: var(--purple, #6c63ff);
         color: #f7f7f799;
         transition: all 0.3s ease;
+    }
+}
+
+.priorityBadge {
+    display: inline-block;
+    padding: 0 8px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 8px;
+    color: #ffffff;
+    min-width: 50px;
+    text-align: center;
+}
+
+.priorityHigh {
+    background-color: #ff149326;
+    border: 1px solid #ff1493;
+    color: #e91e63;
+}
+
+.priorityMedium {
+    background-color: #ffa5002e;
+    border: 1px solid #ffa500;
+    color: #ff8c00;
+}
+
+.priorityLow {
+    background-color: #00bfff1f;
+    border: 1px solid #00bfff;
+    color: #1e90ff;
+}
+
+.taskContent {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.editSelect {
+    padding: 10px 12px;
+    background: rgba(108, 99, 255, 0.1);
+    border: 1px solid var(--purple, #6c63ff);
+    border-radius: 6px;
+    margin: 4px 0;
+    color: var(--white, #f7f7f7);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236c63ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+
+    &:hover {
+        border-color: #8a7fff;
+        background-color: #6c63ff26;
+    }
+
+    &:focus {
+        border-color: #a695ff;
+        background-color: #6c63ff33;
+    }
+
+    option {
+        background: #2a2a2a;
+        color: var(--white, #f7f7f7);
+        padding: 8px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &:hover,
+        &:checked {
+            background: var(--purple, #6c63ff);
+            color: #ffffff;
+        }
     }
 }

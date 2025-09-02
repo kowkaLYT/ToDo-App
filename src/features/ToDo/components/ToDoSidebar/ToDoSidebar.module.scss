@@ -1,4 +1,5 @@
 .sidebarContainer {
+    position: relative;
     background-color: #202020e0;
     border-radius: 8px;
     padding: 20px 30px;
@@ -21,4 +22,27 @@
         font-size: 14px;
         color: #d1d5db;
     }
+
+    .buttonPlusModal {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: #8d64ed;
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px #00000033;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background: #7a4ede;
+        }
+    }
+
 }

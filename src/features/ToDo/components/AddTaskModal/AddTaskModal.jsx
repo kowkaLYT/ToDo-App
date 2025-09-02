@@ -5,13 +5,15 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }) {
     const [text, setText] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
+    const [priority, setPriority] = useState("medium");
 
     const handleAdd = () => {
         if (text.trim()) {
-            onAdd(text, date, time);
+            onAdd(text, date, time, priority); 
             setText("");
             setDate("");
             setTime("");
+            setPriority("medium"); 
             onClose();
         }
     };
@@ -53,6 +55,19 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }) {
                         onKeyDown={handleKeyDown}
                         className={styles.modalInput}
                     />
+
+                    <div className={styles.priorityContainer}>
+                        <label className={styles.priorityLabel}>Priority:</label>
+                        <select
+                            value={priority}
+                            onChange={(e) => setPriority(e.target.value)}
+                            className={styles.prioritySelect}
+                        >
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
 
                     <div className={styles.buttonsContainer}>
                         <button

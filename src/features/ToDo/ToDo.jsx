@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Plus } from "lucide-react";
 import TaskInput from "./components/TaskInput/TaskInput.jsx";
 import TaskList from "./components/TaskList/TaskList.jsx";
 import AddTaskModal from "./components/AddTaskModal/AddTaskModal.jsx";
@@ -16,9 +15,15 @@ export default function ToDo() {
         setSearchQuery(query);
     };
 
-    const addTask = (text, date, time) => {
+    const addTask = (text, date, time, priority = "medium") => {
         if (text.trim()) {
-            setTasks((prev) => [...prev, { text, date, time, completed: false }]);
+            setTasks((prev) => [...prev, {
+                text,
+                date,
+                time,
+                priority,
+                completed: false
+            }]);
         }
     };
 
@@ -26,10 +31,16 @@ export default function ToDo() {
         setTasks((prev) => prev.filter((_, i) => i !== index));
     };
 
-    const editTask = (index, newText, newDate, newTime) => {
+    const editTask = (index, newText, newDate, newTime, newPriority = "medium") => {
         if (newText.trim()) {
             const updated = [...tasks];
-            updated[index] = { ...updated[index], text: newText, date: newDate, time: newTime };
+            updated[index] = {
+                ...updated[index],
+                text: newText,
+                date: newDate,
+                time: newTime,
+                priority: newPriority
+            };
             setTasks(updated);
         }
     };
@@ -70,7 +81,6 @@ export default function ToDo() {
         const draggedTask = updated[dragIndex];
 
         updated.splice(dragIndex, 1);
-
         updated.splice(dropIndex, 0, draggedTask);
 
         setTasks(updated);
@@ -82,6 +92,16 @@ export default function ToDo() {
             updated[index] = { ...updated[index], completed: !updated[index].completed };
             return updated;
         });
+    };
+
+    const sortTasksByPriority = () => {
+        const priorityOrder = { high: 3, medium: 2, low: 1 };
+        const sorted = [...tasks].sort((a, b) => {
+            const priorityA = priorityOrder[a.priority || "medium"];
+            const priorityB = priorityOrder[b.priority || "medium"];
+            return priorityB - priorityA;
+        });
+        setTasks(sorted);
     };
 
     const openModal = () => setIsModalOpen(true);
@@ -98,11 +118,28 @@ export default function ToDo() {
 
     const isSearchActive = searchQuery.trim().length > 0;
 
+    const priorityStats = {
+        high: tasks.filter(t => t.priority === "high").length,
+        medium: tasks.filter(t => t.priority === "medium").length,
+        low: tasks.filter(t => t.priority === "low").length
+    };
+
     return (
         <div className={styles.toDoContainer}>
-            <Sidebar />
+            <Sidebar onOpenModal={openModal} />
             <div className={styles.toDoList}>
                 <TaskCalendar tasks={tasks} />
+                {tasks.length > 0 && (
+                    <div className={styles.sortControls}>
+                        <button
+                            onClick={sortTasksByPriority}
+                            className={styles.sortButton}
+                        >
+                            Sort by Priority
+                        </button>
+                    </div>
+                )}
+
                 <TaskInput onSearch={handleSearch} />
                 <TaskList
                     tasks={filteredTasksWithIndices}
@@ -116,10 +153,6 @@ export default function ToDo() {
                     onDragOver={handleDragOver}
                     onDrop={handleDrop}
                 />
-
-                <button className={styles.buttonPlusModal} onClick={openModal}>
-                    <Plus size={28} />
-                </button>
 
                 {tasks.length > 0 && (
                     <div className={styles.progressBar}>
@@ -137,9 +170,15 @@ export default function ToDo() {
                     </div>
                 )}
                 {tasks.length > 0 && (
-                    <div style={{ marginTop: 12 }}>
+                    <div className={styles.taskStats}>
                         <small>
                             All Tasks: {tasks.length} · Completed: {completedCount} · Not Completed: {uncompletedCount}
+                        </small>
+                        <br />
+                        <small className={styles.priorityStats}>
+                            <span className={styles.priorityHigh}>High: {priorityStats.high}</span> ·
+                            <span className={styles.priorityMedium}>Medium: {priorityStats.medium}</span> ·
+                            <span className={styles.priorityLow}>Low: {priorityStats.low}</span>
                         </small>
                     </div>
                 )}
@@ -152,7 +191,7 @@ export default function ToDo() {
                     </div>
                 )}
             </div>
-            
+
             <AddTaskModal isOpen={isModalOpen} onClose={closeModal} onAdd={addTask} />
         </div>
     );
