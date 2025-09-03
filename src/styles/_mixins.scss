@@ -1,0 +1,33 @@
+@mixin priority {
+    .priorityBadge {
+        display: inline-block;
+        padding: 0 8px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 10px;
+        color: #ffffff;
+        min-width: 50px;
+        text-align: center;
+    }
+
+    .priorityHigh {
+        background-color: #ff149326;
+        border: 1px solid #ff1493;
+        color: #e91e63;
+    }
+
+    .priorityMedium {
+        background-color: #ffa5002e;
+        border: 1px solid #ffa500;
+        color: #ff8c00;
+    }
+
+    .priorityLow {
+        background-color: #00bfff1f;
+        border: 1px solid #00bfff;
+        color: #1e90ff;
+    }
+}

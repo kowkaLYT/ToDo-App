@@ -26,7 +26,7 @@ export default function TaskItem({
 
     const handleSave = () => {
         if (text.trim()) {
-            onEdit(index, text, date, time, priority); 
+            onEdit(index, text, date, time, priority);
             setIsEditing(false);
         }
     };
@@ -56,7 +56,6 @@ export default function TaskItem({
         onDrop(e, index);
     };
 
-
     const getPriorityClass = (priority) => {
         switch (priority) {
             case "high": return styles.priorityHigh;
@@ -64,6 +63,17 @@ export default function TaskItem({
             case "low": return styles.priorityLow;
             default: return styles.priorityMedium;
         }
+    };
+
+    const formatDateTime = () => {
+        if (!task.date && !task.time) return '';
+
+        let dateTimeString = '';
+        if (task.date) dateTimeString += task.date;
+        if (task.date && task.time) dateTimeString += ' ';
+        if (task.time) dateTimeString += task.time;
+
+        return ` — ${dateTimeString}`;
     };
 
     return (
@@ -119,11 +129,11 @@ export default function TaskItem({
                         onChange={() => onToggleComplete(index)}
                     />
                     <div className={styles.taskContent}>
-                        <span className={`${styles.priorityBadge} ${getPriorityClass(task.priority || "medium")}`}>
-                            {task.priority || "medium"}
-                        </span>
                         <span className={styles.textTask}>
-                            {task.text} — {task.date} {task.time}
+                            {task.text}{formatDateTime()}
+                            <span className={`${styles.priorityBadge} ${getPriorityClass(task.priority || "medium")}`}>
+                                {task.priority || "medium"}
+                            </span>
                         </span>
                     </div>
                 </label>

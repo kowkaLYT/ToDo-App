@@ -13,6 +13,12 @@ export default function TaskCalendar({ tasks = [] }) {
     const goToPreviousMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
     const goToNextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
 
+    // Helper function to convert JavaScript day (0=Sunday) to Monday-first index
+    const getMondayFirstDayIndex = (date) => {
+        const jsDay = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        return jsDay === 0 ? 6 : jsDay - 1; // Convert to 0 = Monday, 1 = Tuesday, ..., 6 = Sunday
+    };
+
     const formatDateKey = date => date.toISOString().split('T')[0];
     const getTasksForDate = date => {
         const dateKey = formatDateKey(date);
@@ -36,12 +42,11 @@ export default function TaskCalendar({ tasks = [] }) {
     const isToday = date => date.toDateString() === new Date().toDateString();
     const isSelectedDate = date => date.toDateString() === selectedDate.toDateString();
     const handleDateClick = date => setSelectedDate(date);
+
     const getCurrentWeekDays = () => {
         const today = new Date();
-
-        const dayOfWeek = today.getDay();
-        const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-        const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + mondayOffset);
+        const mondayFirstDayIndex = getMondayFirstDayIndex(today);
+        const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - mondayFirstDayIndex);
 
         const weekDays = [];
         for (let i = 0; i < 7; i++) {
@@ -51,17 +56,43 @@ export default function TaskCalendar({ tasks = [] }) {
         }
         return weekDays;
     };
+
     const getFullMonthDays = () => {
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-        const firstDayOfWeek = firstDayOfMonth.getDay();
+        const firstDayOfWeekIndex = getMondayFirstDayIndex(firstDayOfMonth); // Use Monday-first indexing
         const daysInMonth = lastDayOfMonth.getDate();
         const prevMonthDays = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
         const calendarDays = [];
-        for (let i = firstDayOfWeek - 1; i >= 0; i--) calendarDays.push({ day: prevMonthDays - i, isCurrentMonth: false, date: new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, prevMonthDays - i) });
-        for (let d = 1; d <= daysInMonth; d++) calendarDays.push({ day: d, isCurrentMonth: true, date: new Date(currentDate.getFullYear(), currentDate.getMonth(), d) });
+
+        // Previous month days
+        for (let i = firstDayOfWeekIndex - 1; i >= 0; i--) {
+            calendarDays.push({
+                day: prevMonthDays - i,
+                isCurrentMonth: false,
+                date: new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, prevMonthDays - i)
+            });
+        }
+
+        // Current month days
+        for (let d = 1; d <= daysInMonth; d++) {
+            calendarDays.push({
+                day: d,
+                isCurrentMonth: true,
+                date: new Date(currentDate.getFullYear(), currentDate.getMonth(), d)
+            });
+        }
+
+        // Next month days to fill the grid
         const remainingDays = 42 - calendarDays.length;
-        for (let d = 1; d <= remainingDays; d++) calendarDays.push({ day: d, isCurrentMonth: false, date: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, d) });
+        for (let d = 1; d <= remainingDays; d++) {
+            calendarDays.push({
+                day: d,
+                isCurrentMonth: false,
+                date: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, d)
+            });
+        }
+
         return calendarDays;
     };
 
@@ -78,7 +109,7 @@ export default function TaskCalendar({ tasks = [] }) {
             <div key={date.getTime()} onClick={() => handleDateClick(date)} className={cellClass}
                 title={taskCount > 0 ? `${taskCount} task${taskCount > 1 ? 's' : ''}: ${dayTasks.map(t => t.text).join(', ')}` : ''}>
                 <span className={styles.dayNumber}>{date.getDate()}</span>
-                {isWeekView && <div className={styles.dayName}>{daysOfWeek[date.getDay()]}</div>}
+                {isWeekView && <div className={styles.dayName}>{daysOfWeek[getMondayFirstDayIndex(date)]}</div>}
                 {taskCount > 0 &&
                     <div className={styles.tasks}>
                         <div className={styles.taskCount}>{taskCount}</div>

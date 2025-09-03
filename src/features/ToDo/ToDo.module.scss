@@ -1,3 +1,6 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
 .toDoContainer {
     display: flex;
     gap: 20px;
@@ -19,7 +22,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 5px;
+        gap: 10px;
     }
 
     .priorityStats {
@@ -29,52 +32,24 @@
         font-size: 12px;
         font-weight: 500;
 
+        @include m.priority;
+
         .priorityHigh {
-            background-color: #ff149326;
-            border: 1px solid #ff1493;
-            color: #e91e63;
             padding: 6px 12px;
             border-radius: 16px;
             font-weight: 600;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background-color: #ff149340;
-                transform: scale(1.05);
-                box-shadow: 0 2px 8px #ff14934d;
-            }
         }
 
         .priorityMedium {
-            background-color: #ffa5002e;
-            border: 1px solid #ffa500;
-            color: #ff8c00;
             padding: 6px 12px;
             border-radius: 16px;
             font-weight: 600;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background-color: #ffa50047;
-                transform: scale(1.05);
-                box-shadow: 0 2px 8px #ffa5004d;
-            }
         }
 
         .priorityLow {
-            background-color: #00bfff1f;
-            border: 1px solid #00bfff;
-            color: #1e90ff;
             padding: 6px 12px;
-            border-radius: 12px;
+            border-radius: 16px;
             font-weight: 600;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background-color: #00bfff38;
-                transform: scale(1.05);
-                box-shadow: 0 2px 8px #00bfff4d;
-            }
         }
     }
 

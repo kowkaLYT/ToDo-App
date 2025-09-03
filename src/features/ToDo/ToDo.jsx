@@ -174,7 +174,6 @@ export default function ToDo() {
                         <small>
                             All Tasks: {tasks.length} · Completed: {completedCount} · Not Completed: {uncompletedCount}
                         </small>
-                        <br />
                         <small className={styles.priorityStats}>
                             <span className={styles.priorityHigh}>High: {priorityStats.high}</span> ·
                             <span className={styles.priorityMedium}>Medium: {priorityStats.medium}</span> ·

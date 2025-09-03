@@ -12,3 +12,4 @@
 - calendar (dates, month, week view and month view)
 - sidebar
 - task priority
+- if there is no date for task, don't show line after name of the task
