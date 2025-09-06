@@ -6,14 +6,23 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }) {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("medium");
+    const [category, setCategory] = useState("work");
+
+    const categories = [
+        { value: "work", label: "Work" },
+        { value: "personal", label: "Personal" },
+        { value: "home", label: "Home" },
+        { value: "study", label: "Study" }
+    ];
 
     const handleAdd = () => {
         if (text.trim()) {
-            onAdd(text, date, time, priority); 
+            onAdd(text, date, time, priority, category);
             setText("");
             setDate("");
             setTime("");
-            setPriority("medium"); 
+            setPriority("medium");
+            setCategory("work");
             onClose();
         }
     };
@@ -66,6 +75,21 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }) {
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
+                        </select>
+                    </div>
+
+                    <div className={styles.categoryContainer}>
+                        <label className={styles.categoryLabel}>Category:</label>
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className={styles.categorySelect}
+                        >
+                            {categories.map(cat => (
+                                <option key={cat.value} value={cat.value}>
+                                    {cat.label}
+                                </option>
+                            ))}
                         </select>
                     </div>
 

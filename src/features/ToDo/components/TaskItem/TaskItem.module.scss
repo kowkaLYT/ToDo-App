@@ -7,12 +7,14 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 8px;
-    color: var(--white, #f7f7f7);
+    color: #f7f7f7;
+    border-radius: 4px;
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
     text-transform: uppercase;
-    border-bottom: 1px solid var(--purple, #6c63ff);
+    border-left: 4px solid transparent;
+    background: linear-gradient(90deg, transparent 0%, transparent 4px, transparent 4px, transparent 100%);
     transition: all 0.2s ease, transform 0.1s ease;
 
     &.dragOver {
@@ -28,6 +30,30 @@
 
     &:active {
         cursor: grabbing !important;
+    }
+
+    &.categoryWork {
+        border-left: 6px solid #8a5cf6dc;
+        background: #8b5cf61a;
+        border-bottom: 1px solid #6b63ff23;
+    }
+
+    &.categoryPersonal {
+        border-left: 6px solid #ec4899;
+        background: #ec48991a;
+        border-bottom: 1px solid #ff63d823;
+    }
+
+    &.categoryHome {
+        border-left: 6px solid #0ea5e9;
+        background: #0ea5e91a;
+        border-bottom: 1px solid #63a1ff23;
+    }
+
+    &.categoryStudy {
+        border-left: 6px solid #fef9c3;
+        background: #fef9c31a;
+        border-bottom: 1px solid #e8ff6323;
     }
 
     .actionButton {
@@ -62,14 +88,14 @@
         appearance: none;
         width: 18px;
         height: 18px;
-        border: 2px solid var(--purple, #6c63ff);
+        border: 2px solid #ffffff96;
         border-radius: 3px;
         background: transparent;
         cursor: pointer;
         transition: all 0.2s ease;
 
         &:checked {
-            background: var(--purple, #6c63ff);
+            background: #213547;
 
             &::after {
                 content: "✓";
@@ -83,6 +109,34 @@
     }
 
     @include m.priority;
+
+    .priorityBadge {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 8px;
+    }
+
+    .priorityHigh {
+        background: #ef444426;
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+
+    .priorityMedium {
+        background: #f59e0b26;
+        color: #f59e0b;
+        border: 1px solid #f59e0b;
+    }
+
+    .priorityLow {
+        background: #22c55e26;
+        color: #22c55e;
+        border: 1px solid #22c55e;
+    }
+
+
 }
 
 .completed {
@@ -100,12 +154,19 @@
     flex-wrap: wrap;
 }
 
+.textTask {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .editSelect {
     padding: 10px 12px;
     background: rgba(108, 99, 255, 0.1);
     border: 1px solid var(--purple, #6c63ff);
     border-radius: 6px;
-    margin: 4px 0;
+    margin: 4px;
     color: var(--white, #f7f7f7);
     font-size: 14px;
     font-weight: 500;
@@ -120,6 +181,7 @@
     background-repeat: no-repeat;
     background-size: 16px;
     padding-right: 40px;
+    min-width: 120px;
 
     &:hover {
         border-color: #8a7fff;
@@ -144,4 +206,10 @@
             color: #ffffff;
         }
     }
+}
+
+.buttonsContainer {
+    display: flex;
+    gap: 4px;
+    align-items: center;
 }

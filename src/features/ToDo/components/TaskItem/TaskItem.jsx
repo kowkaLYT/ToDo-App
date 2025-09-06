@@ -22,11 +22,19 @@ export default function TaskItem({
     const [date, setDate] = useState(task.date);
     const [time, setTime] = useState(task.time);
     const [priority, setPriority] = useState(task.priority || "medium");
+    const [category, setCategory] = useState(task.category || "work");
     const [isDragOver, setIsDragOver] = useState(false);
+
+    const categories = [
+        { value: "work", label: "Work" },
+        { value: "personal", label: "Personal" },
+        { value: "home", label: "Home" },
+        { value: "study", label: "Study" }
+    ];
 
     const handleSave = () => {
         if (text.trim()) {
-            onEdit(index, text, date, time, priority);
+            onEdit(index, text, date, time, priority, category);
             setIsEditing(false);
         }
     };
@@ -57,11 +65,22 @@ export default function TaskItem({
     };
 
     const getPriorityClass = (priority) => {
-        switch (priority) {
+        switch ((priority || "medium").toLowerCase()) {
             case "high": return styles.priorityHigh;
             case "medium": return styles.priorityMedium;
             case "low": return styles.priorityLow;
             default: return styles.priorityMedium;
+        }
+    };
+
+
+    const getCategoryClass = (category) => {
+        switch (category) {
+            case "work": return styles.categoryWork;
+            case "personal": return styles.categoryPersonal;
+            case "home": return styles.categoryHome;
+            case "study": return styles.categoryStudy;
+            default: return styles.categoryWork;
         }
     };
 
@@ -78,7 +97,7 @@ export default function TaskItem({
 
     return (
         <li
-            className={`${styles.taskItem} ${task.completed ? styles.completed : ""} ${isDragOver ? styles.dragOver : ""}`}
+            className={`${styles.taskItem} ${task.completed ? styles.completed : ""} ${isDragOver ? styles.dragOver : ""} ${getCategoryClass(task.category || "work")}`}
             draggable={!isEditing && !isSearchActive}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -120,6 +139,17 @@ export default function TaskItem({
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </select>
+                    <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        className={styles.editSelect}
+                    >
+                        {categories.map(cat => (
+                            <option key={cat.value} value={cat.value}>
+                                {cat.label}
+                            </option>
+                        ))}
+                    </select>
                 </>
             ) : (
                 <label className={styles.taskLabel}>
@@ -131,8 +161,8 @@ export default function TaskItem({
                     <div className={styles.taskContent}>
                         <span className={styles.textTask}>
                             {task.text}{formatDateTime()}
-                            <span className={`${styles.priorityBadge} ${getPriorityClass(task.priority || "medium")}`}>
-                                {task.priority || "medium"}
+                            <span className={`${styles.priorityBadge} ${getPriorityClass(task.priority)}`}>
+                                {(task.priority || "medium").toUpperCase()}
                             </span>
                         </span>
                     </div>

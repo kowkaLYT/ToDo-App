@@ -15,13 +15,14 @@ export default function ToDo() {
         setSearchQuery(query);
     };
 
-    const addTask = (text, date, time, priority = "medium") => {
+    const addTask = (text, date, time, priority = "medium", category = "work") => {
         if (text.trim()) {
             setTasks((prev) => [...prev, {
                 text,
                 date,
                 time,
                 priority,
+                category,
                 completed: false
             }]);
         }
@@ -31,7 +32,7 @@ export default function ToDo() {
         setTasks((prev) => prev.filter((_, i) => i !== index));
     };
 
-    const editTask = (index, newText, newDate, newTime, newPriority = "medium") => {
+    const editTask = (index, newText, newDate, newTime, newPriority = "medium", newCategory = "work") => {
         if (newText.trim()) {
             const updated = [...tasks];
             updated[index] = {
@@ -39,7 +40,8 @@ export default function ToDo() {
                 text: newText,
                 date: newDate,
                 time: newTime,
-                priority: newPriority
+                priority: newPriority,
+                category: newCategory
             };
             setTasks(updated);
         }
@@ -107,8 +109,6 @@ export default function ToDo() {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const completedCount = tasks.filter((t) => t.completed).length;
-    const uncompletedCount = tasks.length - completedCount;
 
     const filteredTasksWithIndices = tasks
         .map((task, originalIndex) => ({ task, originalIndex }))
@@ -118,15 +118,9 @@ export default function ToDo() {
 
     const isSearchActive = searchQuery.trim().length > 0;
 
-    const priorityStats = {
-        high: tasks.filter(t => t.priority === "high").length,
-        medium: tasks.filter(t => t.priority === "medium").length,
-        low: tasks.filter(t => t.priority === "low").length
-    };
-
     return (
         <div className={styles.toDoContainer}>
-            <Sidebar onOpenModal={openModal} />
+            <Sidebar tasks={tasks} onOpenModal={openModal} />
             <div className={styles.toDoList}>
                 <TaskCalendar tasks={tasks} />
                 {tasks.length > 0 && (
@@ -153,34 +147,6 @@ export default function ToDo() {
                     onDragOver={handleDragOver}
                     onDrop={handleDrop}
                 />
-
-                {tasks.length > 0 && (
-                    <div className={styles.progressBar}>
-                        <div className={styles.progressHeader}>
-                            <span>Progress: {completedCount} of {tasks.length} tasks</span>
-                            <span className={styles.progressPercent}>
-                                {tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0}%
-                            </span>
-                        </div>
-                        <div className={styles.progressTrack}>
-                            <div className={styles.progressFill} style={{
-                                width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%`
-                            }} />
-                        </div>
-                    </div>
-                )}
-                {tasks.length > 0 && (
-                    <div className={styles.taskStats}>
-                        <small>
-                            All Tasks: {tasks.length} · Completed: {completedCount} · Not Completed: {uncompletedCount}
-                        </small>
-                        <small className={styles.priorityStats}>
-                            <span className={styles.priorityHigh}>High: {priorityStats.high}</span> ·
-                            <span className={styles.priorityMedium}>Medium: {priorityStats.medium}</span> ·
-                            <span className={styles.priorityLow}>Low: {priorityStats.low}</span>
-                        </small>
-                    </div>
-                )}
 
                 {isSearchActive && (
                     <div style={{ marginTop: 8 }}>

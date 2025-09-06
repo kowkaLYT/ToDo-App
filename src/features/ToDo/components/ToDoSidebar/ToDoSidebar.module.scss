@@ -1,17 +1,25 @@
 .sidebarContainer {
     position: relative;
     background-color: #202020e0;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 20px 30px;
     text-align: center;
+    box-shadow: 0 6px 20px #0000004d;
+    max-width: 350px;
+    width: 100%;
+    max-height: 800px;
+    width: 100%;
 
     .toDoTitle {
-        font-size: 40px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 12px;
     }
 
     .time {
         display: block;
-        font-size: 20px;
+        font-size: 22px;
         font-weight: bold;
         margin-bottom: 4px;
         color: #ffffff;
@@ -21,6 +29,224 @@
         display: block;
         font-size: 14px;
         color: #d1d5db;
+    }
+
+    .progressBar {
+        margin-top: 20px;
+
+        .progressHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+
+            span {
+                font-size: 0.9rem;
+                color: #e5e5e5;
+            }
+
+            .progressPercent {
+                font-weight: 700;
+                color: #8d64ed;
+            }
+        }
+
+        .progressTrack {
+            width: 100%;
+            height: 12px;
+            background-color: #2e2e2e;
+            border-radius: 6px;
+            overflow: hidden;
+
+            .progressFill {
+                height: 100%;
+                border-radius: 6px;
+                background: linear-gradient(90deg, #8d64ed, #6f4ad6, #a077f0);
+                background-size: 200% 100%;
+                transition: width 0.4s ease-in-out;
+            }
+        }
+    }
+
+    @keyframes progressAnim {
+        0% {
+            background-position: 0 0;
+        }
+
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+
+    .taskStats {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        background: #ffffff0d;
+        border-radius: 10px;
+        border: 1px solid #ffffff1a;
+
+        .generalStats {
+            text-align: center;
+            color: #f7f7f7;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .statsSection {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .statsTitle {
+                color: #d1d5db;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+        }
+    }
+
+    .priorityStats {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .statItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+
+            &:hover {
+                transform: translateX(2px);
+            }
+
+            .label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                .dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                }
+            }
+
+            .count {
+                font-weight: 700;
+            }
+
+            &.high {
+                background: #ff6b6b1a;
+                color: #ff6b6b;
+
+                .dot {
+                    background: #ff6b6b;
+                }
+            }
+
+            &.medium {
+                background: #ffc1071a;
+                color: #ffc107;
+
+                .dot {
+                    background: #ffc107;
+                }
+            }
+
+            &.low {
+                background: #28a7451a;
+                color: #28a745;
+
+                .dot {
+                    background: #28a745;
+                }
+            }
+        }
+    }
+
+    .categoryStats {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .statItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+
+            &:hover {
+                transform: translateX(2px);
+            }
+
+            .label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                .dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                }
+            }
+
+            .count {
+                font-weight: 700;
+            }
+
+            &.work {
+                background: #8b5cf61a;
+                color: #8b5cf6;
+
+                .dot {
+                    background: #8b5cf6;
+                }
+            }
+
+            &.personal {
+                background: #ec48991a;
+                color: #ec4899;
+
+                .dot {
+                    background: #ec4899;
+                }
+            }
+
+            &.home {
+                background: #0ea5e91a;
+                color: #0ea5e9;
+
+                .dot {
+                    background: #0ea5e9;
+                }
+            }
+
+            &.study {
+                background: #fef9c31a;
+                color: #fef9c3;
+
+                .dot {
+                    background: #fef9c3;
+                }
+            }
+
+        }
     }
 
     .buttonPlusModal {

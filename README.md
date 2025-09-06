@@ -13,3 +13,4 @@
 - sidebar
 - task priority
 - if there is no date for task, don't show line after name of the task
+- added category for task ( color, background); replaced it in sidebar (priority, progress bar too); fix styles
